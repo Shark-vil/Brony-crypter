@@ -1,0 +1,1 @@
+version.txt -> get_cryptText.js -> VERSION_APP

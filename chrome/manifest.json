@@ -36,7 +36,8 @@
         }
 	],
 	"permissions": [
-		"https://pastebin.com/raw",
+		"https://pastebin.com/raw/*",
+		"https://raw.githubusercontent.com/Shark-vil/Brony-crypter/*",
 		"activeTab",
 		"storage"
 	]

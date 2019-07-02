@@ -1,5 +1,6 @@
 var hash = "#*28638tr@G#*GR@ugu2d*G@#&GR@#g(23r*08hgio23fFM";
 var origHash = hash;
+var VERSION_APP = "1.0";
 		
 function clickHandler(e) {
     var getInputText = document.getElementById("encrypt_text").value;
@@ -67,4 +68,12 @@ function copy(text) {
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("crypt_start").addEventListener("click", clickHandler);
+});
+
+$(document).ready(function() {
+    $.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/version.txt", function( data ) {
+		var actualVersion = data;
+		if ( actualVersion != VERSION_APP )
+			$(".actual_version").html("<hr><label class=\"version\">Ваша версия расширения устарела! Обновите её по ссылке - <a target=\"_blank\" href=\"https://github.com/Shark-vil/Brony-crypter\">GitHub</a></label>");
+	});
 });
