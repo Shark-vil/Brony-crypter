@@ -30,7 +30,7 @@ function clickHandler(e) {
 		var url = tabs[0].url;
 		var fixUrl = url.split('?')[0]; fixUrl = fixUrl.replace(/(^\w+:|^)\/\//, '');
 
-		$.get( "https://pastebin.com/raw/gzeg1d6v", function( data ) {
+		$.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/hash.txt", function( data ) {
 			var arrayOfLines = data.match(/[^\r\n]+/g);
 			if ( arrayOfLines[0] == 'BronyCrypt' )
 				hash = arrayOfLines[1];

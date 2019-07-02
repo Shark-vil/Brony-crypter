@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-    "name":"Brony crypter - vk.com/ml.brony",
+    "name":"Brony crypter",
     "version":"1.0",
 	"description":"Шифратор и дешифратор новостей.",
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
@@ -36,7 +36,6 @@
         }
 	],
 	"permissions": [
-		"https://pastebin.com/raw/*",
 		"https://raw.githubusercontent.com/Shark-vil/Brony-crypter/*",
 		"activeTab",
 		"storage"

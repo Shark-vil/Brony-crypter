@@ -32,7 +32,7 @@ var replaceComponent = function() {
     if ( isEnabled === false || isBlacklist === true )
         return;
 
-	$.get( "https://pastebin.com/raw/gzeg1d6v", function( data ) {
+	$.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/hash.txt", function( data ) {
 		var arrayOfLines = data.match(/[^\r\n]+/g);
 		if ( arrayOfLines[0] == 'BronyCrypt' )
 			hash = arrayOfLines[1];
