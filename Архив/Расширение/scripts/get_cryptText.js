@@ -30,7 +30,6 @@ function clickHandler(e) {
 		var url = tabs[0].url;
 		var fixUrl = url.split('?')[0]; fixUrl = fixUrl.replace(/(^\w+:|^)\/\//, '');
 
-alert(1);
 		$.get( "https://pastebin.com/raw/gzeg1d6v", function( data ) {
 			var arrayOfLines = data.match(/[^\r\n]+/g);
 			if ( arrayOfLines[0] == 'BronyCrypt' )
@@ -41,7 +40,6 @@ alert(1);
 			var dumpHash = hash;
 			if ( fixUrl != "m.vk.com/mail" && fixUrl != "vk.com/im" )
 				hash = dumpHash + ponyCrypto.MD5(fixUrl);
-			
 			var encryptedText = ponyCrypto.AES.encrypt(getInputText, hash);
 			hash = dumpHash;
 			copy("[BRONY]" + encryptedText + "[/BRONY]");

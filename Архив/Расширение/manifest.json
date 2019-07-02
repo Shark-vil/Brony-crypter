@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-    "name":"Brony crypter",
+    "name":"Brony crypter - vk.com/ml.brony",
     "version":"1.0",
 	"description":"Шифратор и дешифратор новостей.",
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
