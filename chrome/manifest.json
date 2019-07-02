@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
     "name":"Brony crypter",
-    "version":"1.0",
+    "version":"1.1",
 	"description":"Шифратор и дешифратор новостей.",
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 	"browser_action": {
