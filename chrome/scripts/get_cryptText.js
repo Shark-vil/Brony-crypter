@@ -1,12 +1,23 @@
-var hash = "#*28638tr@G#*GR@ugu2d*G@#&GR@#g(23r*08hgio23fFM";
-var origHash = hash;
+/* 
+    Шифрование и копирование зашифрованного текста.
+*/
+
+// Текущая версия расширения (Исходя из version.txt)
 var VERSION_APP = "1.0";
+// Стандартный хеш расширения
+var hash 		= "#*28638tr@G#*GR@ugu2d*G@#&GR@#g(23r*08hgio23fFM";
+// Сохранение копии стандартного хеша
+var origHash 	= hash;
 		
-function clickHandler(e) {
+// Основная функция обработчика события нажатия кнопки шифрования
+cryptAndCopyText = function(e){
+	// Получение значения из input
     var getInputText = document.getElementById("encrypt_text").value;
 	
+	// Проверка допустимой длины текста
 	if ( getInputText.length >= 200 )
 	{
+		// Вывод ошибке в случае нарушения
 		Swal.fire({
 		  position: 'top-end',
 		  type: 'error',
@@ -14,47 +25,68 @@ function clickHandler(e) {
 		  showConfirmButton: false,
 		  timer: 3000
 		})
-		return false;
+		return;
 	}
 	
-    var matches = getInputText.split(/\n|\s\n/);
-    getInputText = matches.join("<br>\n") + "<br>";
+	// Подстановка HTML переносов туда, где это необходимо
+    getInputText = getInputText.split(/\n|\s\n/).join("<br>\n") + "<br>";
 	
-	var pattern = /((?:(http|https|Http|Https|rtsp|Rtsp):\/\/(?:(?:[a-zA-Z0-9\$\-\_\.\+\!\*\'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,64}(?:\:(?:[a-zA-Z0-9\$\-\_\.\+\!\*\'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,25})?\@)?)?((?:(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,64}\.)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnrwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eouw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:\:\d{1,5})?)(\/(?:(?:[a-zA-Z0-9\;\/\?\:\@\&\=\#\~\-\.\+\!\*\'\(\)\,\_])|(?:\%[a-fA-F0-9]{2}))*)?(?:\b|$)/gi;
-	getInputText = getInputText.replace(pattern, function(str, text) {		
-		var url = '<a href="' + text + '" target="_blank" rel="noopener">' + text + '</a>';
-        return url;
+	// Шаблон регулярки для поиска ссылок в тексте
+	var patternFindHrefs = /((?:(http|https|Http|Https|rtsp|Rtsp):\/\/(?:(?:[a-zA-Z0-9\$\-\_\.\+\!\*\'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,64}(?:\:(?:[a-zA-Z0-9\$\-\_\.\+\!\*\'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,25})?\@)?)?((?:(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,64}\.)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnrwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eouw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:\:\d{1,5})?)(\/(?:(?:[a-zA-Z0-9\;\/\?\:\@\&\=\#\~\-\.\+\!\*\'\(\)\,\_])|(?:\%[a-fA-F0-9]{2}))*)?(?:\b|$)/gi;
+	// Поиск ссылок в тексте и реализация их кликабельности
+	getInputText = getInputText.replace(patternFindHrefs, function(str, text){		
+        return '<a href="' + text + '" target="_blank" rel="noopener">' + text + '</a>';
     });
 	
-	chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
-		var url = tabs[0].url;
-		var fixUrl = url.split('?')[0]; fixUrl = fixUrl.replace(/(^\w+:|^)\/\//, '');
+	// Получение текущей реального адреса страницы
+	chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs){
+		// Чтение адреса страницы
+		var realURL = tabs[0].url;
+		// Удаление лишних атрибутов для получения чистой ссылки
+		var fixUrl = realURL.split('?')[0]; fixUrl = fixUrl.replace(/(^\w+:|^)\/\//, '');
 
-		$.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/hash.txt", function( data ) {
+		// Чтение актуально хеша из репозитория
+		$.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/hash.txt", function( data ){
+			// Разделение полученного текста построчно
 			var arrayOfLines = data.match(/[^\r\n]+/g);
+
+			// Проверка валидности полученного текста
 			if ( arrayOfLines[0] == 'BronyCrypt' )
-				hash = arrayOfLines[1];
+				hash = arrayOfLines[1];	// Получаем актуальный хеш
 			else
-				hash = origHash;
+				hash = origHash; // Используем стандартный хеш
 			
+			// Запись хеша во временную переменную
 			var dumpHash = hash;
+			// Проверка на нахождение в диалоге
 			if ( fixUrl != "m.vk.com/mail" && fixUrl != "vk.com/im" )
-				hash = dumpHash + ponyCrypto.MD5(fixUrl);
-			var encryptedText = ponyCrypto.AES.encrypt(getInputText, hash);
+				hash = dumpHash + cryptoJS.MD5(fixUrl);	// Если не диалог, делаем хеш рабочим только для сообщества
+
+			// Кодирование текста
+			var encryptedText = cryptoJS.AES.encrypt(getInputText, hash);
+			// Возвращение оригинального хеша из временной переменной
 			hash = dumpHash;
+			// Копирование текста в буфер обмена, с добавлением атрибутов
 			copy("[BRONY]" + encryptedText + "[/BRONY]");
 		});
 	});
 }
 
-function copy(text) {
-    var input = document.createElement("input");
-    input.setAttribute('value', text);
-    document.body.appendChild(input);
-    input.select();
-    var result = document.execCommand("copy");
+// Функция копирования текста
+copy = function(text){
+	// Создание объекта input
+	var input = document.createElement("input");
+	// Установка входных данных в качестве значения
+	input.setAttribute('value', text);
+	// Добавление объекта imput в конец html кода страницы 
+	document.body.appendChild(input);
+	// Выделение содержимого внутри input 
+	input.select();
+	// Выполнение команды копирования
+	document.execCommand("copy");
+	// Удаление объекта imput из html кода страницы
     document.body.removeChild(input);
-	
+	// Вывод сообщения об успешном копировании
 	Swal.fire({
 	  position: 'top-end',
 	  type: 'success',
@@ -62,18 +94,18 @@ function copy(text) {
 	  showConfirmButton: false,
 	  timer: 1500
 	})
-	
-    return result;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("crypt_start").addEventListener("click", clickHandler);
-});
+// Выполнение функции после полной загрузки страницы
+$(document).ready(function(){
+	// Вызывается при нажатии на кнопку шифрования
+	document.getElementById("crypt_start").addEventListener("click", cryptAndCopyText);
 
-$(document).ready(function() {
-    $.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/version.txt", function( data ) {
-		var actualVersion = data;
-		if ( actualVersion != VERSION_APP )
-			$(".actual_version").html("<hr><label class=\"version\">Ваша версия расширения устарела! Обновите её по ссылке - <a target=\"_blank\" href=\"https://github.com/Shark-vil/Brony-crypter\">GitHub</a></label>");
+	// Чтение актуальной версии из репозитория
+    $.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/version.txt", function( getVersion ){
+		// Проверка совпадения версий. В случае неудачи будет выведено сообщение с просьбой обновить расширение
+		if ( getVersion != VERSION_APP )
+			$(".actual_version").html("<hr><label class=\"version\">Ваша версия расширения устарела!" +
+				"Обновите её по ссылке - <a target=\"_blank\" href=\"https://github.com/Shark-vil/Brony-crypter\">GitHub</a></label>");
 	});
 });

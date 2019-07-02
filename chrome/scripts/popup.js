@@ -1,72 +1,117 @@
-var isVkMobile = false;
-var isEnabled = false;
-var isBlacklist = false;
-var hash = "#*28638tr@G#*GR@ugu2d*G@#&GR@#g(23r*08hgio23fFM";
-var origHash = hash;
+/* 
+    Дешифрование текста на странице и прочие проверки.
+*/
 
+// Переменная для проверки мобильной версии VK
+var isVkMobile  = false;
+// Переменная для проверки доступности расширения
+var isEnabled   = false;
+// Переменная для проверки невалидных ссылок
+var isBlacklist = false;
+// Стандартный хеш расширения
+var hash        = "#*28638tr@G#*GR@ugu2d*G@#&GR@#g(23r*08hgio23fFM";
+// Сохранение копии стандартного хеша
+var origHash    = hash;
+
+// Проверка доступности расширения
 chrome.storage.local.get('GoogleExtension_BronyCrypt_Launch', function(data){
+    // Если значение положительно, продолжаем выполнение скрипта
     if (data.GoogleExtension_BronyCrypt_Launch === true)
         isEnabled = true;
 });
 
-chrome.storage.onChanged.addListener(function(changes, area) {
-    if (area == "local" && "GoogleExtension_BronyCrypt_Launch" in changes) {
+// Вызов функции при смене значения в хранилище
+chrome.storage.onChanged.addListener(function(changes, area){
+    // Проверка валидности входных данных
+    if (area == "local" && "GoogleExtension_BronyCrypt_Launch" in changes){
+        // Установка нового значения для переменной
         isEnabled = changes.GoogleExtension_BronyCrypt_Launch.newValue;
     };
 });
 
-var findingMethod = function(getText) {
-	var dumpHash = hash;
-	var fixUrl = window.location.href.split('?')[0]; fixUrl = fixUrl.replace(/(^\w+:|^)\/\//, '');
-    var newHTMLCode = getText.replace(/\[BRONY](.*?)\[\/BRONY]/gi, function(str, text) {		
+// Функция для поиска и декодирования текста на html странице
+var replaceHTMLComponent = function(getText){
+    // Запись хеша во временную переменную
+    var dumpHash = hash;
+    // Удаление лишних атрибутов для получения чистой ссылки
+    var fixUrl = window.location.href.split('?')[0]; fixUrl = fixUrl.replace(/(^\w+:|^)\/\//, '');
+    // Поиск текста по регулярному выражению
+    var newHTMLCode = getText.replace(/\[BRONY](.*?)\[\/BRONY]/gi, function(str, text){
+        // Проверка на нахождение в диалоге
 		if ( fixUrl != "m.vk.com/mail" && fixUrl != "vk.com/im" )
-			hash = dumpHash + ponyCrypto.MD5(fixUrl);
-        var decrypted = ponyCrypto.AES.decrypt(text, hash);
-		hash = dumpHash;
-        return decrypted.toString(ponyCrypto.enc.Utf8);
+            hash = dumpHash + cryptoJS.MD5(fixUrl); // Если не диалог, делаем хеш рабочим только для сообщества
+        
+        // Декодирование текста
+        var decrypted = cryptoJS.AES.decrypt(text, hash);
+        // Возвращение оригинального хеша из временной переменной
+        hash = dumpHash;
+        // Возвращение декодированного текста, приведённого в читабельный вид
+        return decrypted.toString(cryptoJS.enc.Utf8);
     });
+    // Возврат нового html блока
     return newHTMLCode;
 }
 
-var replaceComponent = function() {
+// Функция для поиска необходимых блоков на HTML странице
+var findingCryptMethod = function() {
+    // Не выполнять код, если приложение выключено, или имеет невалидные данные страницы
     if ( isEnabled === false || isBlacklist === true )
         return;
 
-	$.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/hash.txt", function( data ) {
-		var arrayOfLines = data.match(/[^\r\n]+/g);
+    // Чтение актуально хеша из репозитория
+	$.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/hash.txt", function( data ){
+        // Разделение полученного текста построчно
+        var arrayOfLines = data.match(/[^\r\n]+/g);
+        
+        // Проверка валидности полученного текста
 		if ( arrayOfLines[0] == 'BronyCrypt' )
-			hash = arrayOfLines[1];
+			hash = arrayOfLines[1]; // Получаем актуальный хеш
 		else
-			hash = origHash;
-		
-		if (isVkMobile === true) {
-			$(".pi_text").each(function(i) {
-				var newHTMLCode = findingMethod($(this).html());
+			hash = origHash; // Используем стандартный хеш
+        
+        // Поиск элементов в зависимости от версии отображения VK (Мобильная и десктопная)
+		if (isVkMobile === true){
+            // Запись на стене сооьщества
+			$(".pi_text").each(function(i){
+                // Получение изменённого кода
+                var newHTMLCode = replaceHTMLComponent($(this).html());
+                // Запись изменённого кода
 				$(this).html(newHTMLCode);
-			});
-			$(".mi_text").each(function(i) {
-				var newHTMLCode = findingMethod($(this).html());
+            });
+            // Сообщение в VK
+			$(".mi_text").each(function(i){
+                // Получение изменённого кода
+                var newHTMLCode = replaceHTMLComponent($(this).html());
+                // Запись изменённого кода
 				$(this).html(newHTMLCode);
 			});
 		} else {
-			$(".wall_post_text").each(function(i) {
-				var newHTMLCode = findingMethod($(this).html());
+            // Запись на стене сооьщества
+			$(".wall_post_text").each(function(i){
+                // Получение изменённого кода
+                var newHTMLCode = replaceHTMLComponent($(this).html());
+                // Запись изменённого кода
 				$(this).html(newHTMLCode);
-			});
-			$(".im-mess--text").each(function(i) {
-				var newHTMLCode = findingMethod($(this).html());
+            });
+            // Сообщение в VK
+			$(".im-mess--text").each(function(i){
+                // Получение изменённого кода
+                var newHTMLCode = replaceHTMLComponent($(this).html());
+                // Запись изменённого кода
 				$(this).html(newHTMLCode);
 			});
 		}
 	});
 }
 
+// Функция для проверки VK на мобильную версию сайта
 var vkCheckerUrl = function() {
     if (location.hostname.indexOf("m.vk.com") != -1) {
         isVkMobile = true;
     };
 }
 
+// Функция для поиска невалидных значений на странице
 var checkBadGroup = function() {
     if ($("#page_menu_group_manage").length && location.href.indexOf("vk.com/mlpfan") != -1) {
         return true;
@@ -74,25 +119,31 @@ var checkBadGroup = function() {
     return false;
 }
 
+// функция основной проверки
 var checkers = function() {
+    // Если сообщество имеет невалидные параметры - блокируем расширение
     if (checkBadGroup())
     {
         chrome.storage.local.set({'GoogleExtension_BronyCrypt_IsBadGroup': true});
         isBlacklist = true;
     }
 
+    // Проверка на мобильную версию VK
     vkCheckerUrl();
-    replaceComponent();
 
+    // Замена текста на странице
+    findingCryptMethod();
+
+    // Вызов замены текста после перехода в диалог
     $(".nim-dialog--name").click(function() {
-        setTimeout(replaceComponent, 2000);
+        setTimeout(findingCryptMethod, 2000);
     });
-
     $(".nim-dialog--text-preview").click(function() {
-        setTimeout(replaceComponent, 2000);
+        setTimeout(findingCryptMethod, 2000);
     });
 }
 
+// Функция для вызова проверки после смены URL вдреса сайта ( В пределах вк )
 function urlHandler(){
     this.oldUrl = window.location.href;
     this.Check;
@@ -107,14 +158,18 @@ function urlHandler(){
     this.Check = setInterval(function(){ detect() }, 500);
 }
 
+// Создание нового экземпляра класса отслеживания
 var urlDetection = new urlHandler();
 
+// Выполнение проверок по завершению загрузк страницы
 $(document).ready(function() {
+    // Выполнение основной проверки
     checkers();
 
+    // Функция для вызова проверки каждый раз после окончания прокрутки страницы
     var timeout = false;
     $(window).scroll(function() {
         if (timeout !== false) { clearTimeout(timeout); };
-        timeout = setTimeout(function() { replaceComponent(); }, 300);
+        timeout = setTimeout(function() { findingCryptMethod(); }, 300);
     });
 });
