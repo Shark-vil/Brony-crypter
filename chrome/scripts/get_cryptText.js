@@ -3,7 +3,7 @@
 */
 
 // Текущая версия расширения (Исходя из version.txt)
-var VERSION_APP = "1.0";
+var VERSION_APP = "1.6";
 // Стандартный хеш расширения
 var hash 		= "#*28638tr@G#*GR@ugu2d*G@#&GR@#g(23r*08hgio23fFM";
 // Сохранение копии стандартного хеша
@@ -105,7 +105,16 @@ $(document).ready(function(){
     $.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/version.txt", function( getVersion ){
 		// Проверка совпадения версий. В случае неудачи будет выведено сообщение с просьбой обновить расширение
 		if ( getVersion != VERSION_APP )
-			$(".actual_version").html("<hr><label class=\"version\">Ваша версия расширения устарела!" +
-				"Обновите её по ссылке - <a target=\"_blank\" href=\"https://github.com/Shark-vil/Brony-crypter\">GitHub</a></label>");
+			$(".actual_version").html("<hr><label>Ваша версия расширения устарела! " +
+				"Обновите расширение в магазине Google Chrome.</label><hr>");
+	});
+
+	// Чтение актуальных новостей
+    $.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/news.txt", function( getNews ){
+		// Разделение полученного текста построчно
+		var arrayOfLines = data.match(/[^\r\n]+/g);
+		// Вывод новостей в случае их наличия
+		if ( arrayOfLines[0] != "BronyCryptNews" )
+			$(".actual_news").html("</h4>Новости: </h4><p>" + arrayOfLines[1] + "</p>");
 	});
 });

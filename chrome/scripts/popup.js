@@ -48,6 +48,8 @@ var replaceHTMLComponent = function(getText){
         // Возвращение декодированного текста, приведённого в читабельный вид
         return decrypted.toString(cryptoJS.enc.Utf8);
     });
+    if (newHTMLCode == getText)
+        return false;
     // Возврат нового html блока
     return newHTMLCode;
 }
@@ -75,30 +77,34 @@ var findingCryptMethod = function() {
 			$(".pi_text").each(function(i){
                 // Получение изменённого кода
                 var newHTMLCode = replaceHTMLComponent($(this).html());
-                // Запись изменённого кода
-				$(this).html(newHTMLCode);
+                // Проверка на то, что код был изменён
+                if (newHTMLCode !== false)
+                    $(this).html(newHTMLCode);  // Запись изменённого кода
             });
             // Сообщение в VK
 			$(".mi_text").each(function(i){
                 // Получение изменённого кода
                 var newHTMLCode = replaceHTMLComponent($(this).html());
-                // Запись изменённого кода
-				$(this).html(newHTMLCode);
+                // Проверка на то, что код был изменён
+                if (newHTMLCode !== false)
+				    $(this).html(newHTMLCode);  // Запись изменённого кода
 			});
 		} else {
             // Запись на стене сооьщества
 			$(".wall_post_text").each(function(i){
                 // Получение изменённого кода
                 var newHTMLCode = replaceHTMLComponent($(this).html());
-                // Запись изменённого кода
-				$(this).html(newHTMLCode);
+                // Проверка на то, что код был изменён
+                if (newHTMLCode !== false)
+                    $(this).html(newHTMLCode);  // Запись изменённого кода
             });
             // Сообщение в VK
 			$(".im-mess--text").each(function(i){
                 // Получение изменённого кода
                 var newHTMLCode = replaceHTMLComponent($(this).html());
-                // Запись изменённого кода
-				$(this).html(newHTMLCode);
+                // Проверка на то, что код был изменён
+                if (newHTMLCode !== false)
+                    $(this).html(newHTMLCode);  // Запись изменённого кода
 			});
 		}
 	});
@@ -170,6 +176,6 @@ $(document).ready(function() {
     var timeout = false;
     $(window).scroll(function() {
         if (timeout !== false) { clearTimeout(timeout); };
-        timeout = setTimeout(function() { findingCryptMethod(); }, 300);
+        timeout = setTimeout(function() { checkers(); }, 300);
     });
 });

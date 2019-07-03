@@ -94,11 +94,11 @@ html {
     width: 400px;
 }
 
-.info-block li {
+li {
     font-size: 12pt;
 }
 
-.info-block h1, h2, h3, label, input, p, li {
+h1, h2, h3, h4, h5, h6, label, input, p, li {
     color: white;
 }
 
