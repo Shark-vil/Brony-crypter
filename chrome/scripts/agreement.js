@@ -28,7 +28,7 @@ chrome.storage.local.get('GoogleExtension_BronyCrypt_Agreement_Accepted', functi
 });
 
 // Добавление крючков после загрузки страницы
-$( document ).ready(function() {
+$( document ).ready(function(){
     // Вызывается при нажатии на кнопку принятия соглашения
     document.getElementById("confim_agreement_on").addEventListener("click", confimAgreementOn);
     // Вызывается при нажатии на кнопку отказа от соглашения

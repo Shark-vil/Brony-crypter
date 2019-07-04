@@ -8,6 +8,8 @@ var VERSION_APP = "1.6";
 var hash 		= "#*28638tr@G#*GR@ugu2d*G@#&GR@#g(23r*08hgio23fFM";
 // Сохранение копии стандартного хеша
 var origHash 	= hash;
+// // Подключение компрессора
+// var jsscompress = require("./jsscompress");
 		
 // Основная функция обработчика события нажатия кнопки шифрования
 cryptAndCopyText = function(e){
@@ -66,6 +68,7 @@ cryptAndCopyText = function(e){
 			var encryptedText = cryptoJS.AES.encrypt(getInputText, hash);
 			// Возвращение оригинального хеша из временной переменной
 			hash = dumpHash;
+
 			// Копирование текста в буфер обмена, с добавлением атрибутов
 			copy("[BRONY]" + encryptedText + "[/BRONY]");
 		});
@@ -112,9 +115,9 @@ $(document).ready(function(){
 	// Чтение актуальных новостей
     $.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/news.txt", function( getNews ){
 		// Разделение полученного текста построчно
-		var arrayOfLines = data.match(/[^\r\n]+/g);
+		var arrayOfLines = getNews.match(/[^\r\n]+/g);
 		// Вывод новостей в случае их наличия
-		if ( arrayOfLines[0] != "BronyCryptNews" )
-			$(".actual_news").html("</h4>Новости: </h4><p>" + arrayOfLines[1] + "</p>");
+		if ( arrayOfLines[0] == "BronyCryptNews" )
+			$(".actual_news").html("<h4>Новости: </h4><p>" + arrayOfLines[1] + "</p>");
 	});
 });

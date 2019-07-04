@@ -46,7 +46,7 @@ var replaceHTMLComponent = function(getText){
         // Возвращение оригинального хеша из временной переменной
         hash = dumpHash;
         // Возвращение декодированного текста, приведённого в читабельный вид
-        return decrypted.toString(cryptoJS.enc.Utf8);
+        return "<label class=\"brony-crypter-title\">Brony crypter:</label><br>" + decrypted.toString(cryptoJS.enc.Utf8);
     });
     if (newHTMLCode == getText)
         return false;
