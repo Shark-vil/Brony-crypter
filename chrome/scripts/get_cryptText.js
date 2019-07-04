@@ -104,14 +104,6 @@ $(document).ready(function(){
 	// Вызывается при нажатии на кнопку шифрования
 	document.getElementById("crypt_start").addEventListener("click", cryptAndCopyText);
 
-	// Чтение актуальной версии из репозитория
-    $.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/version.txt", function( getVersion ){
-		// Проверка совпадения версий. В случае неудачи будет выведено сообщение с просьбой обновить расширение
-		if ( getVersion != VERSION_APP )
-			$(".actual_version").html("<hr><label>Ваша версия расширения устарела! " +
-				"Обновите расширение в магазине Google Chrome.</label><hr>");
-	});
-
 	// Чтение актуальных новостей
     $.get( "https://raw.githubusercontent.com/Shark-vil/Brony-crypter/master/news.txt", function( getNews ){
 		// Разделение полученного текста построчно
