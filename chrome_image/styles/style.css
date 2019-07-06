@@ -1,0 +1,116 @@
+.logo { 
+    text-align: center; 
+}
+
+.parent
+{
+	display: inline-block;
+    padding: 30px;
+}
+
+/* #crypt_start { 
+    width: 100%; 
+    height: 2em; 
+} */
+
+#encrypt_text { 
+    resize: none; 
+}
+
+html {
+    background: #303030;
+}
+
+#crypt_start, #confim_agreement_on {
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    /* padding: .8em 1em calc(.8em + 15px); */
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    background: rgb(52, 139, 253);
+    text-shadow: black 0 0 3px;
+    transition: 0.2s;
+} 
+
+#crypt_start:hover, #confim_agreement_on:hover { 
+    background: rgb(46, 122, 209); 
+}
+
+#crypt_start:active, #confim_agreement_on:active {
+    background: rgb(13, 93, 243);
+}
+
+#confim_agreement_off {
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 3px;
+    background: rgb(253, 52, 52);
+    text-shadow: black 0 0 3px;
+    transition: 0.2s;
+} 
+
+#confim_agreement_off:hover { 
+    background: rgb(209, 46, 46); 
+}
+
+#confim_agreement_off:active {
+    background: rgb(243, 13, 13);
+}
+
+#encrypt_text {
+    color: white;
+    background: #303030;
+}
+
+#encrypt_text::placeholder {
+    color: rgb(189, 189, 189);
+}
+
+.image-link {
+    display: inline-block; /* Строчно-блочный элемент */
+    position: relative; /* Относительное позиционирование */
+}
+.image-link:hover::after {
+    content: attr(data-title); /* Выводим текст */
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; right: 0; bottom: 5px; /* Положение подсказки */
+    z-index: 1; /* Отображаем подсказку поверх других элементов */
+    background: rgba(0, 0, 0, 0.856); /* Полупрозрачный цвет фона */
+    color: #fff; /* Цвет текста */
+    text-align: center; /* Выравнивание текста по центру */
+    font-family: Arial, sans-serif; /* Гарнитура шрифта */
+    font-size: 11px; /* Размер текста подсказки */
+    padding: 5px 10px; /* Поля */
+    border: 1px solid #333; /* Параметры рамки */
+}
+
+.info-block {
+    width: 400px;
+}
+
+li {
+    font-size: 12pt;
+}
+
+h1, h2, h3, h4, h5, h6, label, input, p, li {
+    color: white;
+}
+
+a:link {
+    color: rgb(224, 100, 96); 
+}
+a:visited {
+    color: #EF7D55;
+}
+a:hover {
+    color: #f5290e; 
+}
+a:active {
+    color: rgb(255, 232, 24); 
+}

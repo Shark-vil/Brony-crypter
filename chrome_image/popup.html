@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Brony Crypt - Главная панель</title>
+        <link href="styles/style.css" rel="stylesheet">
+        <link href="styles/switch.css" rel="stylesheet">
+        <link href="styles/alert.css" rel="stylesheet">
+        <link href="styles/version.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="parent">
+            <a href="agreement.html"><div class="image-link" data-title="Пользовательское соглашение">
+                <img src="images/agreement.png" alt="Пользовательское соглашение">
+            </div></a>
+
+			<a href="about.html"><div class="image-link" data-title="Об расширении">
+				<img src="images/logo_main_page.png" alt="Лого">
+			</div></a>
+			
+            <a href="manual.html"><div class="image-link" data-title="Руководство пользователя">
+                <img src="images/manual.png" alt="Руководство пользователя">
+            </div></a>
+        </div>
+
+        <textarea id="encrypt_text" rows="7" cols="50" placeholder="Вставьте сюда текст, который хотите зашифровать"></textarea>
+        <label>Если хотите, укажите изображение, в котором будет зашифрованный текст:</label>
+	    <input type="file" id="loadImage" accept="image/*"/><hr>
+        <input id="crypt_start" type="button" value="Скопировать зашифрованный текст" />
+
+        <label class="switch">
+            <input id="enabled_application" type="checkbox">
+            <span class="slider round"></span>
+        </label>
+        <label class="description">Статус расширения: ВКЛЮЧЕНО</label>
+
+        <div class="actual_news"><h4>Новости: </h4><p>Новостей нет</p></div>
+        <img id="resultImage" style="display: none; width: 300px; height: 300px;" src="" />
+    </body>
+
+    <script type="text/javascript" src="scripts/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="scripts/crypto.js"></script>
+    <script type="text/javascript" src="scripts/get_cryptText.js"></script>
+    <script type="text/javascript" src="scripts/switch.js"></script>
+    <script type="text/javascript" src="scripts/sweetalert2@8.js"></script>
+    <script type="text/javascript" src="scripts/imageCrypt.js"></script>
+
+    <script type="text/javascript" src="scripts/steganography/sha512.js"></script>
+    <script type="text/javascript" src="scripts/steganography/utf_8.js"></script>
+    <script type="text/javascript" src="scripts/steganography/crypto.js"></script>
+    <script type="text/javascript" src="scripts/steganography/readimg.js"></script>
+    <script type="text/javascript" src="scripts/steganography/setimg.js"></script>
+    <script type="text/javascript" src="scripts/steganography/main.js"></script>
+</html>
