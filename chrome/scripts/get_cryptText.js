@@ -63,7 +63,12 @@ cryptAndCopyText = function(e) {
 			var dumpHash = hash;
 			// Проверка на нахождение в диалоге
 			if ( fixUrl != "m.vk.com/mail" && fixUrl != "vk.com/im" )
+			{
+				fixUrl = fixUrl.replace('.', '0');
+				fixUrl = fixUrl.replace('-', '1');
+				fixUrl = fixUrl.replace('_', '2');
 				hash = dumpHash + cryptoJS.MD5(fixUrl);	// Если не диалог, делаем хеш рабочим только для сообщества
+			}
 
 			// Кодирование текста
 			var encryptedText = cryptoJS.AES.encrypt(getInputText, hash);

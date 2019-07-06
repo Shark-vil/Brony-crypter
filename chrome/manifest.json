@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
     "name":"Brony crypter",
-    "version":"1.7",
+    "version":"1.7.1",
 	"description":"Шифратор и дешифратор новостей. С помощью этого расширения вы сможете шифровать текст с ссылками, и публиковать их в соц. сети VK.",
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 	"browser_action": {

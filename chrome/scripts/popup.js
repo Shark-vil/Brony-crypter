@@ -38,8 +38,13 @@ var replaceHTMLComponent = function(getText) {
     // Поиск текста по регулярному выражению
     var newHTMLCode = getText.replace(/\[BRONY](.*?)\[\/BRONY]/gi, function(str, text) {
         // Проверка на нахождение в диалоге
-		if ( fixUrl != "m.vk.com/mail" && fixUrl != "vk.com/im" )
+        if ( fixUrl != "m.vk.com/mail" && fixUrl != "vk.com/im" )
+        {
+            fixUrl = fixUrl.replace('.', '0');
+            fixUrl = fixUrl.replace('-', '1');
+            fixUrl = fixUrl.replace('_', '2');
             hash = dumpHash + cryptoJS.MD5(fixUrl); // Если не диалог, делаем хеш рабочим только для сообщества
+        }
 
         // Декодирование текста
         var decrypted = cryptoJS.AES.decrypt(text, hash);
